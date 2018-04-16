@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
 		fputs("Input message(q to quit) : ", stdout);
 		fgets(send_message, BUF_SIZE, stdin);
 		
-		if(!strcmp(send_message, "q\n") || !strcmp(send_message, "Q\n"))
+		if(!strcmp(send_message, "quit\n") || !strcmp(send_message, "QUIT\n"))
 			break;
 
 		tcp_str_len = write(tcp_sock, send_message, strlen(send_message));

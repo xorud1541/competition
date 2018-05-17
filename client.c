@@ -6,8 +6,8 @@
 #include<sys/socket.h>
 
 #define BUF_SIZE 1024
-#define UDP_PORT 10000
-#define TCP_PORT 9999
+#define PORT 9999
+//#define TCP_PORT 9999
 void error_handling(char *message);
 
 int main(int argc, char* argv[])
@@ -39,12 +39,13 @@ int main(int argc, char* argv[])
 
 	tcp_serv_addr.sin_family = AF_INET;
 	tcp_serv_addr.sin_addr.s_addr = inet_addr(argv[1]);
-	tcp_serv_addr.sin_port = htons(TCP_PORT);
+	tcp_serv_addr.sin_port = htons(PORT);
 
 	udp_serv_addr.sin_family = AF_INET;
 	udp_serv_addr.sin_addr.s_addr = inet_addr(argv[1]);
-	udp_serv_addr.sin_port = htons(UDP_PORT);
+	udp_serv_addr.sin_port = htons(PORT);
 
+	
 	if(connect(tcp_sock, (struct sockaddr*)&tcp_serv_addr, sizeof(tcp_serv_addr))==-1)
 		error_handling("connect() error!");
 
@@ -60,8 +61,8 @@ int main(int argc, char* argv[])
 			break;
 
 		tcp_str_len = write(tcp_sock, send_message, strlen(send_message));
-		sendto(udp_sock, send_message, strlen(send_message), 0, (struct sockaddr*)&udp_serv_addr,
-				sizeof(udp_serv_addr));
+		sendto(udp_sock, send_message, strlen(send_message), 0,
+				(struct sockaddr*)&udp_serv_addr,sizeof(udp_serv_addr));
 
 		// receive messages from each servers //
 
